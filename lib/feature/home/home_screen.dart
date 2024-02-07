@@ -8,6 +8,7 @@ import 'component/search_bar_widget.dart';
 import 'component/special_list_view.dart';
 import 'component/sub_title.dart';
 import 'component/horizontal_list_view.dart';
+import 'component/big_size_banner.dart';
 
 // 다른 파일에서 호출하면 에러난다.
 //import 'searchbar.dart';
@@ -357,6 +358,10 @@ class HomeScreen extends ConsumerWidget {
                 ],
               ),
             ),
+            const SizedBox(height: 25),
+
+            BigSizeBanner(),
+
             const SizedBox(height: 25),
           ],
         ),

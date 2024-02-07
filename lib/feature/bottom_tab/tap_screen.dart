@@ -11,7 +11,7 @@ final tabIndexProvider = StateProvider((ref) => 0);
 // class _TabScreenState extends State<TabScreen> {
 class TabScreen extends ConsumerWidget {
   final List<Widget> _pages = [
-    const HomeScreen(),
+    HomeScreen(),
     const PlaceholderWidget(color: Colors.green, text: 'Tab 2'),
     const CommunityScreen(), //PlaceholderWidget(color: Colors.blue, text: 'Tab 3'),
     const PlaceholderWidget(color: Colors.yellow, text: 'Tab 4'),
@@ -81,17 +81,18 @@ class BottomBarItem extends BottomNavigationBarItem {
     required IconData icon,
     required String label,
   }) : super(
-            icon: Column(
-              children: [
-                const SizedBox(
-                  height: 10,
-                ),
-                Icon(icon),
-                const SizedBox(
-                  height: 5,
-                ),
-                Text(label)
-              ],
-            ),
-            label: '');
+          icon: Column(
+            children: [
+              const SizedBox(
+                height: 10,
+              ),
+              Icon(icon),
+              const SizedBox(
+                height: 5,
+              ),
+              Text(label)
+            ],
+          ),
+          label: '',
+        );
 }
