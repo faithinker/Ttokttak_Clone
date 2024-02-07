@@ -13,7 +13,7 @@ class TabScreen extends ConsumerWidget {
   final List<Widget> _pages = [
     const HomeScreen(),
     const PlaceholderWidget(color: Colors.green, text: 'Tab 2'),
-    const PlaceholderWidget(color: Colors.blue, text: 'Tab 3'),
+    const CommunityScreen(), //PlaceholderWidget(color: Colors.blue, text: 'Tab 3'),
     const PlaceholderWidget(color: Colors.yellow, text: 'Tab 4'),
   ];
 
@@ -27,6 +27,7 @@ class TabScreen extends ConsumerWidget {
     return Scaffold(
       body: _pages[tabIndexState],
       bottomNavigationBar: Consumer(builder: (context, watch, child) {
+        // ? iOS TabBarController처럼 - 대시라인으로 구분되도록 UI 변경 MaterialApp을 CupertinoApp으로 바꿔야 할수도?...
         return BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           selectedItemColor: const Color.fromARGB(255, 68, 68, 68),
@@ -48,13 +49,6 @@ class TabScreen extends ConsumerWidget {
             BottomBarItem(icon: Icons.article_outlined, label: '나의 똑닥'),
             BottomBarItem(icon: Icons.people_outline, label: '커뮤니티'),
             BottomBarItem(icon: Icons.person_outline, label: '마이페이지'),
-            // const BottomNavigationBarItem(icon: Icon(Icons.home), label: '홈'),
-            // const BottomNavigationBarItem(
-            //     icon: Icon(Icons.pages), label: '나의 똑닥'),
-            // const BottomNavigationBarItem(
-            //     icon: Icon(Icons.people), label: '커뮤니티'),
-            // const BottomNavigationBarItem(
-            //     icon: Icon(Icons.person), label: '마이페이지'),
           ],
         );
       }),
@@ -92,13 +86,6 @@ class BottomBarItem extends BottomNavigationBarItem {
                 const SizedBox(
                   height: 10,
                 ),
-                // Padding(
-                //   padding: const EdgeInsets.only(top: 5.0),
-                //   child: Icon(icon),
-                // ),
-                // const SizedBox(
-                //   height: 4,
-                // ),
                 Icon(icon),
                 const SizedBox(
                   height: 5,
