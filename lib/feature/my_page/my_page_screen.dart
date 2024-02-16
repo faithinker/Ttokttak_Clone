@@ -2,11 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:children_remote_reservation_app/feature/my_page/list/item_list.dart';
 import 'package:children_remote_reservation_app/feature/my_page/list/my_list.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
+final scrollProvider =
+    StateProvider<ScrollController>((ref) => ScrollController());
 
-final scrollProvider = StateProvider<ScrollController>((ref) => ScrollController());
-
+// TODO: 스크롤 할 때 Top Navigation에 마이페이지 로그인 hidden 처리 false => riverpod watch로 구현
 class MyPageScreen extends ConsumerWidget {
+  
+  
+
   MyPageScreen({super.key});
 
   final List<String> mySubTitles = [
