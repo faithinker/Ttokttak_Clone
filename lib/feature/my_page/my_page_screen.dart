@@ -1,148 +1,133 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:children_remote_reservation_app/feature/my_page/list/item_list.dart';
+import 'package:children_remote_reservation_app/feature/my_page/list/my_list.dart';
 
-List<(IconData, String)> lists = [
-  (Icons.present_to_all, '이벤트·투표'),
-  (Icons.people, '가족관리'),
-  (Icons.favorite, '건강피드'),
-  (Icons.star, '찜한 병원'),
-];
+
+final scrollProvider = StateProvider<ScrollController>((ref) => ScrollController());
 
 class MyPageScreen extends ConsumerWidget {
-  const MyPageScreen({super.key});
+  MyPageScreen({super.key});
+
+  final List<String> mySubTitles = [
+    '나의 관리',
+    '나의 서류',
+    '고객센터',
+  ];
+
+  final List<Manage> manages = [
+    const Manage(text: '멤버십 관리'),
+    const Manage(text: '우리아이 키·몸무게', isNew: true),
+    const Manage(text: '결제수단 관리'),
+    const Manage(text: '진료내역'),
+    const Manage(text: '접수·예약 패널티'),
+  ];
+
+  final List<Manage> documents = [
+    const Manage(text: '실손보험 청구'),
+    const Manage(text: '모바일 서류보관함'),
+  ];
+
+  final List<List<String>> csCenters = [
+    ['1:1 채팅 상담', '공지사항'],
+    ['약관 보기', '버전 v10.12.N'],
+  ];
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     double screenWidth = MediaQuery.of(context).size.width;
-    return SafeArea(
-      minimum: const EdgeInsets.symmetric(horizontal: 20),
-      child: Column(
-        children: [
-          const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+    return Column(
+      children: [
+        SafeArea(
+          minimum: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
             children: [
-              GestureDetector(
-                onTap: () {
-                  //
-                },
-                child: Icon(
-                  Icons.notifications_outlined,
-                  color: Colors.black.withOpacity(0.5),
-                ),
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      //
+                    },
+                    child: Icon(
+                      Icons.notifications_outlined,
+                      color: Colors.black.withOpacity(0.5),
+                      size: 28,
+                    ),
+                  ),
+                  const SizedBox(width: 15),
+                  GestureDetector(
+                    onTap: () {
+                      //
+                    },
+                    child: Icon(
+                      Icons.settings_outlined,
+                      color: Colors.black.withOpacity(0.5),
+                      size: 28,
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(width: 15),
-              GestureDetector(
-                onTap: () {
-                  //
-                },
-                child: Icon(
-                  Icons.settings_outlined,
-                  color: Colors.black.withOpacity(0.5),
-                ),
-              ),
+              const SizedBox(height: 10),
             ],
           ),
-          SingleChildScrollView(
+        ),
+        Expanded(
+          child: SingleChildScrollView(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    const Text(
-                      '마이페이지',
-                      style:
-                          TextStyle(fontSize: 28, fontWeight: FontWeight.w600),
-                    ),
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    Container(
-                      width: 70,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.yellow,
-                      ),
-                      child: const Center(
-                        child: Text(
-                          '로그인',
-                          style: TextStyle(
-                            fontSize: 16,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          const Text(
+                            '마이페이지',
+                            style: TextStyle(
+                                fontSize: 28, fontWeight: FontWeight.w600),
                           ),
-                          textAlign: TextAlign.center,
-                        ),
+                          const SizedBox(width: 15),
+                          Container(
+                            width: 70,
+                            height: 40,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.yellow,
+                            ),
+                            child: const Center(
+                              child: Text(
+                                '로그인',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    // TODO: 나의 관리부터 시작
-                  ],
+                      const SizedBox(height: 30),
+                      SizedBox(
+                        width: screenWidth,
+                        height: 130,
+                        child: ItemList(),
+                      ),
+                    ],
+                  ),
                 ),
-                const SizedBox(height: 20),
-                SizedBox(
-                  width: screenWidth,
-                  height: 130,
-                  child: ItemList(screenWidth: screenWidth),
-                ),
+                MyList(subTitle: mySubTitles[0], manages: manages),
+                Divider(thickness: 10, color: Colors.black.withOpacity(0.035)),
+                MyList(subTitle: mySubTitles[1], manages: documents),
+                Divider(thickness: 10, color: Colors.black.withOpacity(0.035)),
+                MyList(subTitle: mySubTitles[2], csCenters: csCenters),
               ],
             ),
-          )
-        ],
-      ),
-    );
-  }
-}
-
-class ItemList extends StatelessWidget {
-  final double screenWidth;
-
-  //const ItemList({Key? key}) : super(key: key);
-  const ItemList({
-    Key? key,
-    required this.screenWidth,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    // 가변 길이 = 전체 가로 길이 - padding(양쪽, 부모도 계산) - item 간격 패딩(전체 갯수 - 1/마지막 제외)
-    double itemWidth = (screenWidth - 60 - 60) / 4;
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-      child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: lists.length,
-          itemBuilder: (BuildContext context, int index) {
-            (IconData, String) item = lists[index];
-            return Row(
-              children: [
-                Column(
-                  children: [
-                    Container(
-                      width: itemWidth,
-                      height: itemWidth,
-                      decoration: BoxDecoration(
-                        color: Colors.grey[200],
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Icon(
-                        item.$1,
-                        size: itemWidth / 2 - 10,
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      textAlign: TextAlign.center,
-                      item.$2,
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 14,
-                      ),
-                    ),
-                  ],
-                ),
-                if (index != lists.length) const SizedBox(width: 20),
-              ],
-            );
-          }),
+          ),
+        ),
+      ],
     );
   }
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-
 /*
 TODO: 공통 탑 헤더 파일 별도 분리 하기? 
 => 나의 똑닥, 커뮤니티, 마이페이지 전부 같은 공통헤더 같으나

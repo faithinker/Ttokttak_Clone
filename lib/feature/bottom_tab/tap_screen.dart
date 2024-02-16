@@ -13,8 +13,11 @@ class TabScreen extends ConsumerWidget {
   final List<Widget> _pages = [
     const HomeScreen(),
     const PlaceholderWidget(color: Colors.green, text: 'Tab 2'),
-    const CommunityScreen(), //PlaceholderWidget(color: Colors.blue, text: 'Tab 3'),
-    const MyPageScreen(), //PlaceholderWidget(color: Colors.yellow, text: 'Tab 4'),
+    const ProviderScope(
+        child:
+            CommunityScreen()), //PlaceholderWidget(color: Colors.blue, text: 'Tab 3'),
+
+    MyPageScreen(), //PlaceholderWidget(color: Colors.yellow, text: 'Tab 4'),
   ];
 
   TabScreen({super.key});
