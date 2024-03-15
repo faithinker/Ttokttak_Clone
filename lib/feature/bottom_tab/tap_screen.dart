@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:children_remote_reservation_app/feature/home/home_screen.dart';
 import 'package:children_remote_reservation_app/feature/my_page/my_page_screen.dart';
 import 'package:children_remote_reservation_app/feature/community/community_screen.dart';
+import 'package:children_remote_reservation_app/feature/community/tab_bar_screen.dart';
 
 final tabIndexProvider = StateProvider((ref) => 0);
 
@@ -13,9 +14,8 @@ class TabScreen extends ConsumerWidget {
   final List<Widget> _pages = [
     const HomeScreen(),
     const PlaceholderWidget(color: Colors.green, text: 'Tab 2'),
-    const ProviderScope(
-        child:
-            CommunityScreen()), //PlaceholderWidget(color: Colors.blue, text: 'Tab 3'),
+    ProviderScope(child: CommunityScreen()),
+    //TabBarScreen()), //PlaceholderWidget(color: Colors.blue, text: 'Tab 3'),
 
     MyPageScreen(), //PlaceholderWidget(color: Colors.yellow, text: 'Tab 4'),
   ];

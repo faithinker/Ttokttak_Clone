@@ -1,15 +1,5 @@
-buildscript {
-    ext.kotlin_version = '1.7.10'
-    repositories {
-        google()
-        mavenCentral()
-    }
+// FIXME: 안드로이드 빌드가 안되고 있다. 수정 필요
 
-    dependencies {
-        classpath 'com.android.tools.build:gradle:7.3.0'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    }
-}
 
 allprojects {
     repositories {
@@ -29,3 +19,51 @@ subprojects {
 tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }
+
+
+// *** Migration 코드
+
+// https://docs.gradle.org/8.1.1/userguide/plugins.html#sec:plugin_management
+// https://docs.flutter.dev/release/breaking-changes/flutter-gradle-plugin-apply
+
+
+/*
+roject.buildDir = '../build'
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+subprojects {
+    project.evaluationDependsOn(':app')
+}
+
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir
+}
+
+// https://docs.gradle.org/8.1.1/userguide/plugins.html#sec:plugin_management
+pluginManagement {
+    def flutterSdkPath = {
+        def properties = new Properties()
+        file("local.properties").withInputStream { properties.load(it) }
+        def flutterSdkPath = properties.getProperty("flutter.sdk")
+        assert flutterSdkPath != null, "flutter.sdk not set in local.properties"
+        return flutterSdkPath
+    }()
+
+    includeBuild("$flutterSdkPath/packages/flutter_tools/gradle")
+
+    repositories {
+        //google()
+    }
+}
+
+plugins {
+    id "dev.flutter.flutter-plugin-loader" version "1.0.0"
+    id "com.android.application" version "1.0.0" apply false
+    id "org.jetbrains.kotlin.android" version "1.7.10" apply false // gradle 7.3.0
+}
+
+subprojects {
+    project.evaluationDependsOn(':app')
+}
+*/
